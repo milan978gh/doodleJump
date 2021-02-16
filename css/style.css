@@ -1,4 +1,3 @@
-
 * {
 	margin: 0;
 	padding: 0;
@@ -7,25 +6,28 @@
 	box-sizing: border-box;
 	scroll-behavior: smooth;
 }
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
 .grid {
-  width: 400px;
-  height: 600px;
-  background-image: url('../img/background.png');
-  position: relative;
-  font-size: 100px;
-  text-align: center;
+	width: 400px;
+	height: 600px;
+	background-image: url("../img/background.png");
+	position: relative;
+	font-size: 100px;
+	text-align: center;
 }
-
 .doodler {
-  width: 87px;
-  height: 85px;
-  background-image: url('../img/doodle-guy.png');
-  position: absolute;
+	width: 87px;
+	height: 85px;
+	background-image: url("../img/doodle-guy.png");
+	position: absolute;
 }
-
 .platform {
-  width: 85px;
-  height: 15px;
-  background-image: url('../img/platform.png');
-  position: absolute;
+	width: 85px;
+	height: 15px;
+	background-image: url("../img/platform.png");
+	position: absolute;
 }
