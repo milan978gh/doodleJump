@@ -8,11 +8,13 @@ let platformCount = 5;
 let platforms = [];
 let upTimerId;
 let downTimerId;
+let leftTimerId;
+let rightTimerId;
 let isJumping = true;
 let isGoingLeft = false;
 let isGoingRight = false;
-let leftTimerId;
-let rightTimerId;
+let score = 0;
+const gravity = 0.9;
 
 
 // create doodler
@@ -54,12 +56,13 @@ function movePlatforms() {
       let visual = platform.visual;
       visual.style.bottom = platform.bottom + 'px';
 
-      if(platform.bottom<10){
-        let firstPlatform=platforms[0].visual
-        firstPlatform.classList.remove('platform')
-        platforms.shift()
-        let newPlatform=new Platform(600)
-        platforms.push(newPlatform)
+      if (platform.bottom < 10) {
+        let firstPlatform = platforms[0].visual;
+        firstPlatform.classList.remove('platform');
+        platforms.shift();
+        score++;
+        let newPlatform = new Platform(600);
+        platforms.push(newPlatform);
       }
     });
   }
@@ -103,6 +106,7 @@ function fall() {
 }
 // control
 function control(e) {
+  doodler.style.bottom = doodlerBottomSpace + 'px';
   if (e.key === 'ArrowLeft') {
     moveLeft();
   } else if (e.key === 'ArrowRight') {
@@ -123,7 +127,7 @@ function moveLeft() {
       doodlerLeftSpace -= 5;
       doodler.style.left = doodlerLeftSpace + 'px';
     } else moveRight();
-  }, 20);
+  }, 30);
 }
 // move right
 function moveRight() {
@@ -137,7 +141,7 @@ function moveRight() {
       doodlerLeftSpace += 5;
       doodler.style.left = doodlerLeftSpace + 'px';
     } else moveLeft();
-  }, 20);
+  }, 30);
 }
 // move straight
 function moveStraight() {
@@ -149,9 +153,14 @@ function moveStraight() {
 // game over
 function gameOver() {
   isGameOver = true;
+  while (grid.firstChild) {
+    grid.removeChild(grid.firstChild);
+  }
+  grid.innerHTML = score;
   clearInterval(upTimerId);
   clearInterval(downTimerId);
-
+  clearInterval(leftTimerId);
+  clearInterval(rightTimerId);
 }
 // start game
 function start() {
@@ -159,7 +168,7 @@ function start() {
     createPlatforms();
     createDoodler();
     setInterval(movePlatforms, 30);
-    jump();
+    jump(startPoint);
     document.addEventListener('keydown', control);
   }
 }
